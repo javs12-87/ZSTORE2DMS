@@ -1,0 +1,4 @@
+@EndUserText.label: 'Files to DMS'
+define service ZFILE2DMS {
+  expose ZC_STORE2DMS;
+}

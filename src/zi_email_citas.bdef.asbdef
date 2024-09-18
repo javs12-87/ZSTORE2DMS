@@ -1,0 +1,40 @@
+managed implementation in class zbp_i_email_citas unique;
+strict ( 2 );
+with draft;
+
+define behavior for ZI_EMAIL_CITAS //alias <alias_name>
+persistent table zcita_email
+with additional save
+draft table zcita_email_d
+lock master
+total etag LocalLastChangedAt
+authorization master ( instance )
+etag master LastChangedAt
+{
+  field ( readonly ) Filename, EmailStatus;
+  field ( readonly : update ) CitaId;
+
+  create;
+  update;
+  delete;
+
+  draft action Edit;
+  draft action Activate optimized;
+  draft action Discard;
+  draft action Resume;
+
+  draft determine action Prepare;
+
+  mapping for zcita_email
+    {
+      CitaId             = cita_id;
+      EmailStatus        = email_status;
+      EmailTo            = email_to;
+      Filename           = filename;
+      LastChangedAt      = last_changed_at;
+      LocalCreatedAt     = local_created_at;
+      LocalCreatedBy     = local_created_by;
+      LocalLastChangedAt = local_last_changed_at;
+      LocalLastChangedBy = local_last_changed_by;
+    }
+}

@@ -1,0 +1,49 @@
+managed implementation in class zbp_i_store2dms unique;
+strict ( 2 );
+with draft;
+
+define behavior for ZI_STORE2DMS //alias <alias_name>
+persistent table zcita_docs
+draft table zcita_docs_d
+lock master
+total etag LocalLastChangedAt
+authorization master ( instance )
+etag master LastChangedAt
+{
+  field ( readonly ) LastChangedAt, LocalLastChangedBy, LocalLastChangedAt, LocalCreatedBy,
+  LocalCreatedAt, RepositoryId, ObjectID, GeneratedPDF, EmailStatus;
+  field ( readonly : update ) CitaId;
+
+  create;
+  update;
+  delete;
+
+  determination send2DMS on save {create;}
+  action createPDF result [0..1] $self;
+  action sendEmail result [0..1] $self;
+
+  draft action Edit;
+  draft action Activate optimized;
+  draft action Discard;
+  draft action Resume;
+
+  draft determine action Prepare;
+
+  mapping for zcita_docs
+    {
+      CitaId  = cita_id;
+      RepositoryId = repository_id;
+      ObjectId = object_id;
+      Filename = filename;
+      Mimetype = mimetype;
+      Attachment = attachment;
+      GeneratedPDF = genpdf_id;
+      EmailDestination = email_to;
+      EmailStatus = email_status;
+      LocalCreatedBy = local_created_by;
+      LocalCreatedAt = local_created_at;
+      LocalLastChangedBy = local_last_changed_by;
+      LocalLastChangedAt = local_last_changed_at;
+      LastChangedAt = last_changed_at;
+    }
+}

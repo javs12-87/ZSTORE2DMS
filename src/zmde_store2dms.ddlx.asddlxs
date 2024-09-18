@@ -1,0 +1,64 @@
+@Metadata.layer: #CORE
+@UI: { headerInfo: {
+typeName: 'Cita_Attachment',
+typeNamePlural: 'Cita_Attachments',
+title: { type: #STANDARD, value: 'CitaId' },
+         description: { type: #STANDARD, value: 'CitaId' } },
+         presentationVariant: [{
+         sortOrder: [{ by: 'CitaId', direction: #ASC }],
+         visualizations: [{type: #AS_LINEITEM}] }] }
+annotate entity ZC_STORE2DMS with
+{
+@UI.facet: [    {
+                label: 'Cita Attachments',
+                id: 'GeneralInfo',
+                type: #COLLECTION,
+                position: 10
+                },
+                     { id:            'Citas_Data',
+                    purpose:       #STANDARD,
+                    type:          #IDENTIFICATION_REFERENCE,
+                    label:         'Citas',
+                    parentId: 'GeneralInfo',
+                    position:      10 },
+                  {
+                      id: 'Upload',
+                      purpose: #STANDARD,
+                      type: #FIELDGROUP_REFERENCE,
+                      parentId: 'GeneralInfo',
+                      label: 'Upload',
+                      position: 20,
+                      targetQualifier: 'Upload'
+                  } ]
+  @UI: { lineItem:       [ { position: 10, importance: #HIGH , label: 'Cita'},{ type: #FOR_ACTION, dataAction: 'createPDF', label: 'Generate PDF' } ] ,
+        identification: [ { position: 10 , label: 'Cita ID' },{ type: #FOR_ACTION, dataAction: 'createPDF', label: 'Generate PDF' } ] }
+  CitaId;
+  @UI: { lineItem:       [ { position: 20, importance: #HIGH , label: 'Repository ID'},{ type: #FOR_ACTION, dataAction: 'sendEmail', label: 'Send Email' } ] ,
+           identification: [ { position: 20 , label: 'DMS Repository ID' },{ type: #FOR_ACTION, dataAction: 'sendEmail', label: 'Send Email' } ] }
+  RepositoryId;
+  @UI: { lineItem:       [ { position: 30, importance: #HIGH , label: 'DMS Object ID'} ] ,
+           identification: [ { position: 30 , label: 'DMS Object ID' } ] }
+  ObjectID;
+  @UI:
+  { fieldGroup:     [ { position: 40, qualifier: 'Upload' , label: 'Attachment'} ]}
+  Attachment;
+
+  @UI: { lineItem:       [ { position: 50, importance: #HIGH , label: 'Generated PDF DMS ID'} ] ,
+           identification: [ { position: 50 , label: 'Generated PDF DMS ID' } ] }
+  GeneratedPDF;
+
+  @UI: { lineItem:       [ { position: 60, importance: #HIGH , label: 'Email To'} ] ,
+           identification: [ { position: 60 , label: 'Email To' } ] }
+  EmailDestination;
+  
+  @UI: { lineItem:       [ { position: 70, importance: #HIGH , label: 'Email Sent'} ] ,
+           identification: [ { position: 70 , label: 'Email Sent' } ] }
+  EmailStatus;
+
+  @UI.hidden: true
+  Mimetype;
+
+  @UI.hidden: true
+  Filename;
+
+}

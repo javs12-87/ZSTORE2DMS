@@ -1,0 +1,38 @@
+@Metadata.layer: #CORE
+@UI: { headerInfo: {
+typeName: 'Email',
+typeNamePlural: 'Emails',
+title: { type: #STANDARD, value: 'CitaId' },
+         description: { type: #STANDARD, value: 'EmailTo' } },
+         presentationVariant: [{
+         sortOrder: [{ by: 'CitaId', direction: #ASC }],
+         visualizations: [{type: #AS_LINEITEM}] }] }
+annotate entity ZC_EMAIL_CITAS with
+{
+  @UI.facet: [    {
+                  label: 'Emails',
+                  id: 'GeneralInfo',
+                  type: #COLLECTION,
+                  position: 10
+                  },
+                       { id:            'Email',
+                      purpose:       #STANDARD,
+                      type:          #IDENTIFICATION_REFERENCE,
+                      label:         'Email',
+                      parentId: 'GeneralInfo',
+                      position:      10 }
+                      ]
+  @UI: { lineItem:       [ { position: 10, importance: #HIGH , label: 'Cita'} ] ,
+          identification: [ { position: 10 , label: 'Cita ID' } ] }
+  CitaId;
+  @UI: { lineItem:       [ { position: 20, importance: #HIGH , label: 'Sent file ID'} ] ,
+        identification: [ { position: 20, label: 'Sent File ID' } ] }
+  Filename;
+  @UI: { lineItem:       [ { position: 30, importance: #HIGH , label: 'Recipient'} ] ,
+        identification: [ { position: 30 , label: 'Recipient' } ] }
+  EmailTo;
+  @UI: { lineItem:       [ { position: 40, importance: #HIGH , label: 'Email Status'} ] ,
+        identification: [ { position: 40 , label: 'Email Status' } ] }
+  EmailStatus;
+
+}

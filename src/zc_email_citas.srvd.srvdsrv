@@ -1,0 +1,4 @@
+@EndUserText.label: 'Email Citas'
+define service ZC_EMAIL_CITAS {
+  expose ZC_EMAIL_CITAS;
+}

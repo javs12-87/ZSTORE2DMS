@@ -1,0 +1,20 @@
+projection;
+strict ( 2 );
+use draft;
+
+define behavior for ZC_STORE2DMS //alias <alias_name>
+{
+  use create;
+  use update;
+  use delete;
+
+  use action Edit;
+  use action Activate;
+  use action Discard;
+  use action Prepare;
+  use action Resume;
+
+  use action createPDF;
+  use action sendEmail;
+
+}
